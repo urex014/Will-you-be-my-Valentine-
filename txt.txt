@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flower Growing Button</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f8ff; /* Light blue background */
+      overflow: hidden;
+    }
+
+    .button-container {
+      position: relative;
+      width: 150px;
+      height: 50px;
+    }
+
+    .flower-button {
+      width: 100%;
+      height: 100%;
+      background-color: #6495ed; /* Cornflower blue */
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .flower-button:hover {
+      transform: scale(1.1);
+    }
+
+    .flower {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff69b4; /* Hot pink */
+      border-radius: 50%;
+      animation: grow 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes grow {
+      0% {
+        transform: scale(0) translateY(0);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translateY(-100px);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="button-container">
+    <button class="flower-button">Grow Flowers</button>
+  </div>
+
+  <script>
+    const button = document.querySelector('.flower-button');
+    const container = document.querySelector('.button-container');
+
+    button.addEventListener('mouseenter', () => {
+      // Generate a flower element
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+
+      // Randomize the horizontal position of the flower
+      const randomX = Math.random() * 100 + 'px';
+      flower.style.left = randomX;
+
+      // Append the flower to the container
+      container.appendChild(flower);
+
+      // Remove the flower after the animation ends
+      flower.addEventListener('animationend', () => {
+        flower.remove();
+      });
+    });
+
+    button.addEventListener('mouseleave', () => {
+      // Clear all flowers when the mouse leaves the button
+      const flowers = document.querySelectorAll('.flower');
+      flowers.forEach(flower => flower.remove());
+    });
+  </script>
+
+</body>
+</html>
